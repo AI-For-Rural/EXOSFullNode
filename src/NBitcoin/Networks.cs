@@ -36,11 +36,11 @@ namespace NBitcoin
         /// <summary> The default name used for the Bitcoin configuration file. </summary>
         public const string BitcoinDefaultConfigFilename = "bitcoin.conf";
 
-        /// <summary> The name of the root folder containing the different Stratis blockchains (StratisMain, StratisTest, StratisRegTest). </summary>
-        public const string StratisRootFolderName = "stratis";
+        /// <summary> Edit: The name of the root folder containing the different blockchains (StratisMain, StratisTest, StratisRegTest, Fluid). </summary>
+        public const string StratisRootFolderName = "fluid";
 
-        /// <summary> The default name used for the Stratis configuration file. </summary>
-        public const string StratisDefaultConfigFilename = "stratis.conf";
+        /// <summary> Edit: The default name used for the Blockchain configuration file. </summary>
+        public const string StratisDefaultConfigFilename = "fluid.conf";
 
         public static Network Main => Network.GetNetwork("Main") ?? InitMain();
 
@@ -347,7 +347,7 @@ namespace NBitcoin
             consensus.BIP9Deployments[BIP9Deployments.CSV] = new BIP9DeploymentsParameters(0, 1462060800, 1493596800);
             consensus.BIP9Deployments[BIP9Deployments.Segwit] = new BIP9DeploymentsParameters(1, 0, 0);
 
-            consensus.LastPOWBlock = 12500;
+            consensus.LastPOWBlock = 10000; 
             consensus.IsProofOfStake = true;
             consensus.ConsensusFactory = new PosConsensusFactory() { Consensus = consensus };
 
@@ -358,42 +358,33 @@ namespace NBitcoin
 
             consensus.DefaultAssumeValid = new uint256("0x55a8205ae4bbf18f4d238c43f43005bd66e0b1f679b39e2c5c62cf6903693a5e"); // 795970
 
-            Block genesis = CreateStratisGenesisBlock(consensus.ConsensusFactory, 1470467000, 1831645, 0x1e0fffff, 1, Money.Zero);
+            Block genesis = CreateStratisGenesisBlock(consensus.ConsensusFactory, 1519534128, 55270, 0x1e0fffff, 1, Money.Zero);
             consensus.HashGenesisBlock = genesis.GetHash();
 
             var checkpoints = new Dictionary<int, CheckpointInfo>
             {
-                { 0, new CheckpointInfo(new uint256("0x0000066e91e46e5a264d42c89e1204963b2ee6be230b443e9159020539d972af"), new uint256("0x0000000000000000000000000000000000000000000000000000000000000000")) },
-                { 2, new CheckpointInfo(new uint256("0xbca5936f638181e74a5f1e9999c95b0ce77da48c2688399e72bcc53a00c61eff"), new uint256("0x7d61c139a471821caa6b7635a4636e90afcfe5e195040aecbc1ad7d24924db1e")) }, // Premine
-                { 50, new CheckpointInfo(new uint256("0x0353b43f4ce80bf24578e7c0141d90d7962fb3a4b4b4e5a17925ca95e943b816"), new uint256("0x7c2af3b10d13f9d2bc6063baaf7f0860d90d870c994378144f9bf85d0d555061")) },
-                { 100, new CheckpointInfo(new uint256("0x688468a8aa48cd1c2197e42e7d8acd42760b7e2ac4bcab9d18ac149a673e16f6"), new uint256("0xcf2b1e9e76aaa3d96f255783eb2d907bf6ccb9c1deeb3617149278f0e4a1ab1b")) },
-                { 150, new CheckpointInfo(new uint256("0xe4ae9663519abec15e28f68bdb2cb89a739aee22f53d1573048d69141db6ee5d"), new uint256("0xa6c17173e958dc716cc0892ce33dad8bc327963d78a16c436264ceae43d584ce")) },
-                { 127500, new CheckpointInfo(new uint256("0x4773ca7512489df22de03aa03938412fab5b46154b05df004b97bcbeaa184078"), new uint256("0x619743c02ebaff06b90fcc5c60c52dba8aa3fdb6ba3800aae697cbb3c5483f17")) },
-                { 128943, new CheckpointInfo(new uint256("0x36bcaa27a53d3adf22b2064150a297adb02ac39c24263a5ceb73856832d49679"), new uint256("0xa3a6fd04e41fcaae411a3990aaabcf5e086d2d06c72c849182b27b4de8c2c42a")) },
-                { 136601, new CheckpointInfo(new uint256("0xf5c5210c55ff1ef9c04715420a82728e1647f3473e31dc478b3745a97b4a6d10"), new uint256("0x42058fabe21f7b118a9e358eaf9ef574dadefd024244899e71f2f6d618161e16")) }, // Hardfork to V2 - Drifting Bug Fix
-                { 170000, new CheckpointInfo(new uint256("0x22b10952e0cf7e85bfc81c38f1490708f195bff34d2951d193cc20e9ca1fc9d5"), new uint256("0xa4942a6c99cba397cf2b18e4b912930fe1e64a7413c3d97c5a926c2af9073091")) },
-                { 200000, new CheckpointInfo(new uint256("0x2391dd493be5d0ff0ef57c3b08c73eefeecc2701b80f983054bb262f7a146989"), new uint256("0x253152d129e82c30c584197deb6833502eff3ec2f30014008f75842d7bb48453")) },
-                { 250000, new CheckpointInfo(new uint256("0x681c70fab7c1527246138f0cf937f0eb013838b929fbe9a831af02a60fc4bf55"), new uint256("0x24eed95e00c90618aa9d137d2ee273267285c444c9cde62a25a3e880c98a3685")) },
-                { 300000, new CheckpointInfo(new uint256("0xd10ca8c2f065a49ae566c7c9d7a2030f4b8b7f71e4c6fc6b2a02509f94cdcd44"), new uint256("0x39c4dd765b49652935524248b4de4ccb604df086d0723bcd81faf5d1c2489304")) },
-                { 350000, new CheckpointInfo(new uint256("0xe2b76d1a068c4342f91db7b89b66e0f2146d3a4706c21f3a262737bb7339253a"), new uint256("0xd1dd94985eaaa028c893687a7ddf89143dcf0176918f958c2d01f33d64910399")) },
-                { 390000, new CheckpointInfo(new uint256("0x4682737abc2a3257fdf4c3c119deb09cbac75981969e2ffa998b4f76b7c657bb"), new uint256("0xd84b204ee94499ff65262328a428851fb4f4d2741e928cdd088fdf1deb5413b8")) },
-                { 394000, new CheckpointInfo(new uint256("0x42857fa2bc15d45cdcaae83411f755b95985da1cb464ee23f6d40936df523e9f"), new uint256("0x2314b336906a2ed2a39cbdf6fc0622530709c62dbb3a3729de17154fc9d1a7c4")) },
-                { 528000, new CheckpointInfo(new uint256("0x7aff2c48b398446595d01e27b5cd898087cec63f94ff73f9ad695c6c9bcee33a"), new uint256("0x3bdc865661390c7681b078e52ed3ad3c53ec7cff97b8c45b74abed3ace289fcc")) },
-                { 576000, new CheckpointInfo(new uint256("0xe705476b940e332098d1d5b475d7977312ff8c08cbc8256ce46a3e2c6d5408b8"), new uint256("0x10e31bb5e245ea19650280cfd3ac1a76259fa0002d02e861d2ab5df290534b56")) },
-            };
+				{    0, new CheckpointInfo(new uint256("0x000007c70a931f5cafa42d48eb0f7a627007cada84d84442e7369cc962a0d38f"), new uint256("0x0000000000000000000000000000000000000000000000000000000000000000")) },
+				{    2, new CheckpointInfo(new uint256("0x3fa697d0ba0e948bcd268f2fc316d2c7b41904eeb1bced590053ea0f406cf014"), new uint256("0x0b44e08d070104e6c7a527772aa63acf2b814d61f2db91e184a7d7ec97329388")) }, // Premine
+				{   50, new CheckpointInfo(new uint256("0x5ba5192b53f4c23238e18835195abddbd1e1b6c7ecb320371a83ee57ba43d8cc"), new uint256("0x54b87a44bebb9925fdc52f0df049279b170c41692713473a6592f1efc89515fb")) },
+				{  100, new CheckpointInfo(new uint256("0x4de52b8d1803c0672cf012e9087e967001b0d1912299abed8dc5c90ba2ff5dba"), new uint256("0x52298a813f241c15bacdbd131f9c18b032775dfa3a8fc1d82f4cc4c894bc7bb8")) },
+				{  500, new CheckpointInfo(new uint256("0xc8f2c0bfcea07a71a9d3b5b968995b03bd507f21f2a1697790f0ab421387a500"), new uint256("0x0c1d113888b4d93d76510e911d0db70cfe9a4bea8c4a76e8124c90392688d2db")) },
+				{ 1000, new CheckpointInfo(new uint256("0x93a5c8c3f0f1cfb75122cf02b4413f642b5870ede34689c9e3adf2aa8cb05918"), new uint256("0x5e255d7a0946f20c3a15e59ab1bbeee6b06e50f495723adf9afb191512aa6ad9")) },
+				{ 4000, new CheckpointInfo(new uint256("0x476fac3dc504ad4c154adce532bdfce9b136dc37c29f04141cc16d3290579223"), new uint256("0x23d8c533391908f0bc129576e45dad69d4567f881b7c16e10dc930fd2e7bd73e")) },
+      
+			};
 
             // The message start string is designed to be unlikely to occur in normal data.
             // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
             // a large 4-byte int at any alignment.
             var messageStart = new byte[4];
-            messageStart[0] = 0x70;
-            messageStart[1] = 0x35;
-            messageStart[2] = 0x22;
-            messageStart[3] = 0x05;
-            var magic = BitConverter.ToUInt32(messageStart, 0); //0x5223570; 
+			messageStart[0] = 0x69;
+			messageStart[1] = 0x75;
+			messageStart[2] = 0x38;
+			messageStart[3] = 0x06;
+			var magic = BitConverter.ToUInt32(messageStart, 0); //0x5223570;
 
-            Assert(consensus.HashGenesisBlock == uint256.Parse("0x0000066e91e46e5a264d42c89e1204963b2ee6be230b443e9159020539d972af"));
-            Assert(genesis.Header.HashMerkleRoot == uint256.Parse("0x65a26bc20b0351aebf05829daefa8f7db2f800623439f3c114257c91447f1518"));
+            Assert(consensus.HashGenesisBlock == uint256.Parse("000007c70a931f5cafa42d48eb0f7a627007cada84d84442e7369cc962a0d38f"));
+            Assert(genesis.Header.HashMerkleRoot == uint256.Parse("0x50b30f93db7ee932ee4a01a9673cc0cb114cd8239c5806e8ea47b3c497057c9f"));
 
             NetworkBuilder builder = new NetworkBuilder()
                     .SetName("StratisMain")
@@ -403,23 +394,23 @@ namespace NBitcoin
                     .SetCheckpoints(checkpoints)
                     .SetMagic(magic)
                     .SetGenesis(genesis)
-                    .SetPort(16178)
-                    .SetRPCPort(16174)
+                    .SetPort(39391)
+                    .SetRPCPort(39390)
                     .SetTxFees(10000, 60000, 10000)
                     .SetMaxTimeOffsetSeconds(StratisMaxTimeOffsetSeconds)
                     .SetMaxTipAge(StratisDefaultMaxTipAgeInSeconds)
 
                     .AddDNSSeeds(new[]
                     {
-                        new DNSSeedData("seednode1.stratisplatform.com", "seednode1.stratisplatform.com"),
-                        new DNSSeedData("seednode2.stratis.cloud", "seednode2.stratis.cloud"),
-                        new DNSSeedData("seednode3.stratisplatform.com", "seednode3.stratisplatform.com"),
-                        new DNSSeedData("seednode4.stratis.cloud", "seednode4.stratis.cloud")
+                        new DNSSeedData("seednode1.fluidchains.net", "seednode1.fluidchains.net"),
+						new DNSSeedData("seednode2.fluidchains.cloud", "seednode2.fluidchains.cloud"),
+						new DNSSeedData("seednode3.fluidchains.net", "seednode3.fluidchains.net"),
+						new DNSSeedData( "seednode4.fluidchains.cloud", "seednode4.fluidchains.cloud")
                     })
 
-                    .SetBase58Bytes(Base58Type.PUBKEY_ADDRESS, new byte[] { (63) })
-                    .SetBase58Bytes(Base58Type.SCRIPT_ADDRESS, new byte[] { (125) })
-                    .SetBase58Bytes(Base58Type.SECRET_KEY, new byte[] { (63 + 128) })
+                    .SetBase58Bytes(Base58Type.PUBKEY_ADDRESS, new byte[] {(35) })
+                    .SetBase58Bytes(Base58Type.SCRIPT_ADDRESS, new byte[] {(95) })
+                    .SetBase58Bytes(Base58Type.SECRET_KEY, new byte[] {(35 + 128)})
                     .SetBase58Bytes(Base58Type.ENCRYPTED_SECRET_KEY_NO_EC, new byte[] { 0x01, 0x42 })
                     .SetBase58Bytes(Base58Type.ENCRYPTED_SECRET_KEY_EC, new byte[] { 0x01, 0x43 })
                     .SetBase58Bytes(Base58Type.EXT_PUBLIC_KEY, new byte[] { (0x04), (0x88), (0xB2), (0x1E) })
@@ -432,7 +423,7 @@ namespace NBitcoin
                     .SetBech32(Bech32Type.WITNESS_PUBKEY_ADDRESS, "bc")
                     .SetBech32(Bech32Type.WITNESS_SCRIPT_ADDRESS, "bc");
 
-            var seed = new[] { "101.200.198.155", "103.24.76.21", "104.172.24.79" };
+            var seed = new[] { "" };
             var fixedSeeds = new List<NetworkAddress>();
             // Convert the pnSeeds array into usable address objects.
             Random rand = new Random();
@@ -616,7 +607,7 @@ namespace NBitcoin
 
         private static Block CreateStratisGenesisBlock(ConsensusFactory consensusFactory, uint nTime, uint nNonce, uint nBits, int nVersion, Money genesisReward)
         {
-            string pszTimestamp = "http://www.theonion.com/article/olympics-head-priestess-slits-throat-official-rio--53466";
+            string pszTimestamp = "https://www.olympic.org/news/today-at-pyeongchang-2018-sunday-25-february";
             return CreateStratisGenesisBlock(consensusFactory, pszTimestamp, nTime, nNonce, nBits, nVersion, genesisReward);
         }
 

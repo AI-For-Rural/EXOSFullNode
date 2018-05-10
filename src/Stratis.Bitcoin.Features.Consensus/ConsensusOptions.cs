@@ -30,9 +30,9 @@ namespace Stratis.Bitcoin.Features.Consensus
             this.MaxMoney = long.MaxValue;
             this.CoinbaseMaturity = 50;
 
-            this.ProofOfWorkReward = Money.Coins(4);
+            this.ProofOfWorkReward = Money.Coins(12);
             this.ProofOfStakeReward = Money.COIN;
-            this.PremineReward = Money.Coins(98000000);
+            this.PremineReward = Money.Coins(500000000);
             this.PremineHeight = 2;
             this.StakeMinConfirmations = 50;
             this.StakeMinAge = 60;

@@ -1,16 +1,6 @@
-| Windows | Linux | OS X
-| :---- | :------ | :---- |
-[![Windows build status][1]][2] | [![Linux build status][3]][4] | [![OS X build status][5]][6] | 
-
-[1]: https://ci.appveyor.com/api/projects/status/451tv98n7xvxm5ol/branch/master?svg=true
-[2]: https://ci.appveyor.com/project/stratis/stratisbitcoinfullnode
-[3]: https://travis-ci.org/stratisproject/StratisBitcoinFullNode.svg?branch=master
-[4]: https://travis-ci.org/stratisproject/StratisBitcoinFullNode
-[5]: https://travis-ci.org/stratisproject/StratisBitcoinFullNode.svg?branch=master
-[6]: https://travis-ci.org/stratisproject/StratisBitcoinFullNode
 
 
-Stratis Bitcoin
+The FluidChainsFullNode in C# -- Based on the StratisFullNode by Stratis
 ===============
 
 https://stratisplatform.com
@@ -70,8 +60,8 @@ Running a FullNode
 Our full node is currently in alpha.  
 
 ```
-git clone https://github.com/stratisproject/StratisBitcoinFullNode.git  
-cd StratisBitcoinFullNode\src
+git clone 
+cd FluidChainStratisFullNode\src
 
 dotnet restore
 dotnet build

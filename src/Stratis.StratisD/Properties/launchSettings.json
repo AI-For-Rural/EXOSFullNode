@@ -5,15 +5,15 @@
     },
     "Stratis.StratisD Test": {
       "commandName": "Project",
-      "commandLineArgs": "-testnet"
+      "commandLineArgs": "-mainnet"
     },
     "Stratis.StratisD Test with RPC": {
       "commandName": "Project",
-      "commandLineArgs": "-testnet -server -rpcpassword=password -rpcuser=user"
+      "commandLineArgs": "-mainnet -server -rpcpassword=p -rpcuser=u"
     },
     "Stratis.StratisD Test Keepalive 60s": {
       "commandName": "Project",
-      "commandLineArgs": "-testnet -keepalive=60"
+      "commandLineArgs": "-mainnet -keepalive=60"
     }
   }
 }
