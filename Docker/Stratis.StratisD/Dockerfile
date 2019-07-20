@@ -1,15 +1,13 @@
 FROM microsoft/dotnet:2.1-sdk
 
-RUN git clone https://github.com/stratisproject/StratisBitcoinFullNode.git \
-    && cd /StratisBitcoinFullNode/src/Stratis.StratisD \
-	&& dotnet build
-	
-VOLUME /root/.stratisbitcoin
+ RUN git clone https://github.com/exoeconomy/CivXFullNode.git \
+  && cd /CivXFullNode/src/Stratis.StratisD \
+  && dotnet build
 
-WORKDIR /StratisBitcoinFullNode/src/Stratis.StratisD
+VOLUME /root/.stratisnode
 
-COPY stratis.conf.docker /root/.stratisnode/stratis/StratisMain/stratis.conf
+COPY exos.conf.docker /root/.stratisnode/exos/EXOSMain/exos.conf
 
-EXPOSE 18444 18442 26174 26178 37221
+EXPOSE 4561 4562 37220
 
 CMD ["dotnet", "run"]
