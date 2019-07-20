@@ -10,4 +10,6 @@ COPY exos.conf.docker /root/.stratisnode/exos/EXOSMain/exos.conf
 
 EXPOSE 4561 4562 37220
 
+WORKDIR /CivXFullNode/src/Stratis.StratisD
+
 CMD ["dotnet", "run"]
