@@ -2,13 +2,6 @@
 
 namespace NBitcoin
 {
-    public enum BIP9Deployments : int
-    {
-        TestDummy,
-        CSV,
-        Segwit
-    }
-
     public class BIP9DeploymentsParameters
     {
         /// <summary>Special flag for timeout to indicate always active.</summary>
@@ -16,9 +9,9 @@ namespace NBitcoin
 
         public BIP9DeploymentsParameters(int bit, DateTimeOffset startTime, DateTimeOffset timeout)
         {
-            Bit = bit;
-            StartTime = startTime;
-            Timeout = timeout;
+            this.Bit = bit;
+            this.StartTime = startTime;
+            this.Timeout = timeout;
         }
 
         public BIP9DeploymentsParameters(int bit, long startTime, long timeout)
@@ -26,16 +19,19 @@ namespace NBitcoin
         {
 
         }
+
         public int Bit
         {
             get;
             private set;
         }
+
         public DateTimeOffset StartTime
         {
             get;
             private set;
         }
+
         public DateTimeOffset Timeout
         {
             get;

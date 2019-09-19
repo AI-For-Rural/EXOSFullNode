@@ -5,15 +5,23 @@
     },
     "Stratis.StratisD Test": {
       "commandName": "Project",
-      "commandLineArgs": "-mainnet"
+      "commandLineArgs": "-testnet"
+    },
+    "Stratis.StratisD Test with Default wallet": {
+      "commandName": "Project",
+      "commandLineArgs": "-testnet -rpcallowip=127.0.0.1 -defaultwalletname=default -defaultwalletpassword=default -unlockdefaultwallet -server -rpcpassword=rpcpassword -rpcuser=rpcuser"
     },
     "Stratis.StratisD Test with RPC": {
       "commandName": "Project",
-      "commandLineArgs": "-mainnet -server -rpcpassword=p -rpcuser=u"
+      "commandLineArgs": "-testnet -server -rpcpassword=rpcpassword -rpcuser=rpcuser"
     },
     "Stratis.StratisD Test Keepalive 60s": {
       "commandName": "Project",
-      "commandLineArgs": "-mainnet -keepalive=60"
+      "commandLineArgs": "-testnet -keepalive=60"
+    },
+    "Stratis.StratisD Test No assumevalid": {
+      "commandName": "Project",
+      "commandLineArgs": "-testnet -assumevalid=0 -checkpoints=false"
     }
   }
 }

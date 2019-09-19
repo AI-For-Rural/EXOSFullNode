@@ -57,6 +57,12 @@ namespace Stratis.Bitcoin.Features.MemoryPool
 
         /// <summary>The transaction id that was saved.</summary>
         public uint TrxSaved { get; private set; }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return string.Format("{0}:{1},{2}:{3}", nameof(this.Succeeded), this.Succeeded, nameof(this.TrxSaved), this.TrxSaved);
+        }
     }
 
     /// <summary>
@@ -127,7 +133,7 @@ namespace Stratis.Bitcoin.Features.MemoryPool
         /// <returns>Whether the objects are equal.</returns>
         public override bool Equals(object obj)
         {
-            MempoolPersistenceEntry toCompare = obj as MempoolPersistenceEntry;
+            var toCompare = obj as MempoolPersistenceEntry;
             if (toCompare == null) return false;
 
             if ((this.tx == null) != (toCompare.tx == null))
@@ -210,7 +216,7 @@ namespace Stratis.Bitcoin.Features.MemoryPool
                     }
                     else
                     {
-                        using (FileStream fs = new FileStream(tempFilePath, FileMode.Create))
+                        using (var fs = new FileStream(tempFilePath, FileMode.Create))
                         {
                             this.DumpToStream(network, toSave, fs);
                         }
@@ -261,8 +267,10 @@ namespace Stratis.Bitcoin.Features.MemoryPool
                 return null;
             try
             {
-                using (FileStream fs = new FileStream(filePath, FileMode.Open))
+                using (var fs = new FileStream(filePath, FileMode.Open))
+                {
                     return this.LoadFromStream(network, fs);
+                }
             }
             catch (Exception ex)
             {
@@ -290,14 +298,14 @@ namespace Stratis.Bitcoin.Features.MemoryPool
                 bitcoinReader.ReadWrite(ref version);
                 if (version != MempoolDumpVersion)
                 {
-                    this.mempoolLogger.LogWarning($"Memorypool data is wrong version ({version}) aborting...");
+                    this.mempoolLogger.LogWarning($"Memorypool data is wrong version ({version}) aborting.");
                     return null;
                 }
                 bitcoinReader.ReadWrite(ref numEntries);
             }
             catch
             {
-                this.mempoolLogger.LogWarning($"Memorypool data is corrupt at header, aborting...");
+                this.mempoolLogger.LogWarning($"Memorypool data is corrupt at header, aborting.");
                 return null;
             }
 
@@ -310,7 +318,7 @@ namespace Stratis.Bitcoin.Features.MemoryPool
                 }
                 catch
                 {
-                    this.mempoolLogger.LogWarning($"Memorypool data is corrupt at item {i + 1}, aborting...");
+                    this.mempoolLogger.LogWarning($"Memorypool data is corrupt at item {i + 1}, aborting.");
                     return null;
                 }
 

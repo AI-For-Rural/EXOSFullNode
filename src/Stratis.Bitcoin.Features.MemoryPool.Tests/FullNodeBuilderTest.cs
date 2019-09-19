@@ -5,9 +5,10 @@ using Stratis.Bitcoin.Base;
 using Stratis.Bitcoin.Builder;
 using Stratis.Bitcoin.Configuration;
 using Stratis.Bitcoin.Connection;
+using Stratis.Bitcoin.Consensus;
 using Stratis.Bitcoin.Features.BlockStore;
 using Stratis.Bitcoin.Features.Consensus;
-using Stratis.Bitcoin.Features.Consensus.Interfaces;
+using Stratis.Bitcoin.Tests.Common;
 using Xunit;
 
 namespace Stratis.Bitcoin.Features.MemoryPool.Tests
@@ -17,38 +18,37 @@ namespace Stratis.Bitcoin.Features.MemoryPool.Tests
         [Fact]
         public void CanHaveAllFullnodeServicesTest()
         {
-            // This test is put in the mempool feature because the 
-            // mempool requires all the features to be a fullnode
+            // This test is put in the mempool feature because the
+            // mempool requires all the features to be a fullnode.
 
-
-            NodeSettings nodeSettings = new NodeSettings(args: new string[] {
+            var nodeSettings = new NodeSettings(KnownNetworks.TestNet, args: new string[] {
                 $"-datadir=Stratis.Bitcoin.Features.MemoryPool.Tests/TestData/FullNodeBuilderTest/CanHaveAllServicesTest" });
+
             var fullNodeBuilder = new FullNodeBuilder(nodeSettings);
             IFullNode fullNode = fullNodeBuilder
-                .UsePowConsensus()
                 .UseBlockStore()
+                .UsePowConsensus()
                 .UseMempool()
                 .Build();
 
             IServiceProvider serviceProvider = fullNode.Services.ServiceProvider;
             var network = serviceProvider.GetService<Network>();
             var settings = serviceProvider.GetService<NodeSettings>();
-            var consensusLoop = serviceProvider.GetService<IConsensusLoop>() as ConsensusLoop;
-            var consensus = serviceProvider.GetService<IPowConsensusValidator>() as PowConsensusValidator;
-            var chain = serviceProvider.GetService<NBitcoin.ConcurrentChain>();
+            var consensusManager = serviceProvider.GetService<IConsensusManager>() as ConsensusManager;
+            var chain = serviceProvider.GetService<ChainIndexer>();
             var chainState = serviceProvider.GetService<IChainState>() as ChainState;
-            var blockStoreManager = serviceProvider.GetService<BlockStoreManager>();
+            var consensusRuleEngine = serviceProvider.GetService<IConsensusRuleEngine>();
+            consensusRuleEngine.SetupRulesEngineParent();
             var mempoolManager = serviceProvider.GetService<MempoolManager>();
             var connectionManager = serviceProvider.GetService<IConnectionManager>() as ConnectionManager;
 
             Assert.NotNull(fullNode);
             Assert.NotNull(network);
             Assert.NotNull(settings);
-            Assert.NotNull(consensusLoop);
-            Assert.NotNull(consensus);
+            Assert.NotNull(consensusManager);
             Assert.NotNull(chain);
             Assert.NotNull(chainState);
-            Assert.NotNull(blockStoreManager);
+            Assert.NotNull(consensusRuleEngine);
             Assert.NotNull(mempoolManager);
             Assert.NotNull(connectionManager);
         }

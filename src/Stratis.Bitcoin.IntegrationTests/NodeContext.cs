@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
 using NBitcoin;
 using Stratis.Bitcoin.Features.Consensus.CoinViews;
+using Stratis.Bitcoin.Tests.Common;
 using Stratis.Bitcoin.Utilities;
 
 namespace Stratis.Bitcoin.IntegrationTests
@@ -13,18 +14,19 @@ namespace Stratis.Bitcoin.IntegrationTests
         /// <summary>Factory for creating loggers.</summary>
         protected readonly ILoggerFactory loggerFactory;
 
-        private List<IDisposable> cleanList = new List<IDisposable>();
-        private TestDirectory testDirectory;
+        private readonly List<IDisposable> cleanList;
 
-        public NodeContext(string name, Network network, bool clean)
+        public NodeContext(object caller, string name, Network network, bool clean)
         {
-            network = network ?? Network.RegTest;
+            network = network ?? KnownNetworks.RegTest;
             this.loggerFactory = new LoggerFactory();
             this.Network = network;
-            this.testDirectory = TestDirectory.Create(name, clean);
-            this.PersistentCoinView = new DBreezeCoinView(network, this.testDirectory.FolderName, DateTimeProvider.Default, this.loggerFactory);
-            this.PersistentCoinView.InitializeAsync().GetAwaiter().GetResult();
-            this.cleanList.Add(this.PersistentCoinView);
+            this.FolderName = TestBase.CreateTestDir(caller, name);
+            var dateTimeProvider = new DateTimeProvider();
+            var serializer = new DBreezeSerializer(this.Network.Consensus.ConsensusFactory);
+            this.PersistentCoinView = new DBreezeCoinView(network, this.FolderName, dateTimeProvider, this.loggerFactory, new NodeStats(dateTimeProvider, this.loggerFactory), serializer);
+            this.PersistentCoinView.Initialize();
+            this.cleanList = new List<IDisposable> { this.PersistentCoinView };
         }
 
         public Network Network { get; }
@@ -41,32 +43,27 @@ namespace Stratis.Bitcoin.IntegrationTests
 
         public DBreezeCoinView PersistentCoinView { get; private set; }
 
-        public string FolderName
-        {
-            get
-            {
-                return this.testDirectory.FolderName;
-            }
-        }
+        public string FolderName { get; }
 
-        public static NodeContext Create([CallerMemberName]string name = null, Network network = null, bool clean = true)
+        public static NodeContext Create(object caller, [CallerMemberName]string name = null, Network network = null, bool clean = true)
         {
-            return new NodeContext(name, network, clean);
+            return new NodeContext(caller, name, network, clean);
         }
 
         public void Dispose()
         {
-            foreach (var item in this.cleanList)
+            foreach (IDisposable item in this.cleanList)
                 item.Dispose();
-            this.testDirectory.Dispose(); //Not into cleanlist because it must run last
         }
 
         public void ReloadPersistentCoinView()
         {
             this.PersistentCoinView.Dispose();
             this.cleanList.Remove(this.PersistentCoinView);
-            this.PersistentCoinView = new DBreezeCoinView(this.Network, this.testDirectory.FolderName, DateTimeProvider.Default, this.loggerFactory);
-            this.PersistentCoinView.InitializeAsync().GetAwaiter().GetResult();
+            var dateTimeProvider = new DateTimeProvider();
+            var serializer = new DBreezeSerializer(this.Network.Consensus.ConsensusFactory);
+            this.PersistentCoinView = new DBreezeCoinView(this.Network, this.FolderName, dateTimeProvider, this.loggerFactory, new NodeStats(dateTimeProvider, this.loggerFactory), serializer);
+            this.PersistentCoinView.Initialize();
             this.cleanList.Add(this.PersistentCoinView);
         }
     }
