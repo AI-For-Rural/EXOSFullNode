@@ -12,7 +12,7 @@ namespace Stratis.Bitcoin.Features.Consensus.Rules.CommonRules
     /// </summary>
     public class StratisBugFixPosFutureDriftRule : PosFutureDriftRule
     {
-        /// <summary>Drifting Bug Fix, hardfork on Sat, 19 Nov 2016 00:00:00 GMT.</summary>
+        /// <summary>Drifting Bug Fix, hardfork on Sun Mar 4, 2018 08:00:00 GMT.</summary>
         public const long DriftingBugFixTimestamp = 1479513600;
 
         /// <summary>Old future drift in seconds before the hardfork.</summary>
