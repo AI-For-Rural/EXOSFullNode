@@ -13,7 +13,7 @@ using Stratis.Bitcoin.Networks.Policies;
 
 namespace Stratis.Bitcoin.Networks
 {
-    public class FluidMain : Network
+    public class EXOSMain : Network
     {
         /// <summary> Stratis maximal value for the calculated time offset. If the value is over this limit, the time syncing feature will be switched off. </summary>
         public const int StratisMaxTimeOffsetSeconds = 25 * 60;
@@ -22,32 +22,32 @@ namespace Stratis.Bitcoin.Networks
         public const int StratisDefaultMaxTipAgeInSeconds = 2 * 60 * 60;
 
         /// <summary> The name of the root folder containing the different Fluid blockchains (FluidMain, FluidTest, FluidRegTest). </summary>
-        public const string StratisRootFolderName = "fluid";
+        public const string StratisRootFolderName = "exos";
 
         /// <summary> The default name used for the Fluid configuration file. </summary>
-        public const string StratisDefaultConfigFilename = "fluid.conf";
+        public const string StratisDefaultConfigFilename = "exos.conf";
 
-        public FluidMain()
+        public EXOSMain()
         {
             // The message start string is designed to be unlikely to occur in normal data.
             // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
             // a large 4-byte int at any alignment.
             var messageStart = new byte[4];
-            messageStart[0] = 0x69;
-            messageStart[1] = 0x75;
-            messageStart[2] = 0x38;
-            messageStart[3] = 0x06;
-            uint magic = BitConverter.ToUInt32(messageStart, 0); 
+            messageStart[0] = 0x28;
+            messageStart[1] = 0x62;
+            messageStart[2] = 0x48;
+            messageStart[3] = 0x76;
+            uint magic = BitConverter.ToUInt32(messageStart, 0);
 
-            this.Name = "FluidMain";
+            this.Name = "EXOSMain";
             this.NetworkType = NetworkType.Mainnet;
             this.Magic = magic;
-            this.DefaultPort = 39391;
+            this.DefaultPort = 4562;
             this.DefaultMaxOutboundConnections = 16;
             this.DefaultMaxInboundConnections = 109;
-            this.DefaultRPCPort = 39390;
-            this.DefaultAPIPort = 37222; //Fluid
-            this.DefaultSignalRPort = 38825;
+            this.DefaultRPCPort = 4561;
+            this.DefaultAPIPort = 37223; //EXOS
+            this.DefaultSignalRPort = 38826;
             this.MaxTipAge = 2 * 60 * 60;
             this.MinTxFee = 10000;
             this.FallbackFee = 10000;
@@ -55,14 +55,14 @@ namespace Stratis.Bitcoin.Networks
             this.RootFolderName = StratisRootFolderName;
             this.DefaultConfigFilename = StratisDefaultConfigFilename;
             this.MaxTimeOffsetSeconds = 25 * 60;
-            this.CoinTicker = "FLUID";
+            this.CoinTicker = "EXOS";
             this.DefaultBanTimeSeconds = 16000; // 500 (MaxReorg) * 64 (TargetSpacing) / 2 = 4 hours, 26 minutes and 40 seconds
 
             var consensusFactory = new PosConsensusFactory();
 
             // Create the genesis block.
-            this.GenesisTime = 1519534128;
-            this.GenesisNonce = 55270;
+            this.GenesisTime = 1523205120;
+            this.GenesisNonce = 842767;
             this.GenesisBits = 0x1e0fffff;
             this.GenesisVersion = 1;
             this.GenesisReward = Money.Zero;
@@ -113,7 +113,7 @@ namespace Stratis.Bitcoin.Networks
                 maxMoney: long.MaxValue,
                 coinbaseMaturity: 50,
                 premineHeight: 2,
-                premineReward: Money.Coins(500000000),
+                premineReward: Money.Coins(300000000),
                 proofOfWorkReward: Money.Coins(12),
                 powTargetTimespan: TimeSpan.FromSeconds(14 * 24 * 60 * 60), // two weeks
                 powTargetSpacing: TimeSpan.FromSeconds(10 * 60),
@@ -123,16 +123,16 @@ namespace Stratis.Bitcoin.Networks
                 powLimit: new Target(new uint256("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")),
                 minimumChainWork: null,
                 isProofOfStake: true,
-                lastPowBlock: 10000,
+                lastPowBlock: 45000,
                 proofOfStakeLimit: new BigInteger(uint256.Parse("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").ToBytes(false)),
                 proofOfStakeLimitV2: new BigInteger(uint256.Parse("000000000000ffffffffffffffffffffffffffffffffffffffffffffffffffff").ToBytes(false)),
                 proofOfStakeReward: Money.COIN
             );
 
             this.Base58Prefixes = new byte[12][];
-            this.Base58Prefixes[(int)Base58Type.PUBKEY_ADDRESS] = new byte[] { (35) };
-            this.Base58Prefixes[(int)Base58Type.SCRIPT_ADDRESS] = new byte[] { (95) };
-            this.Base58Prefixes[(int)Base58Type.SECRET_KEY] = new byte[] { (35 + 128) };
+            this.Base58Prefixes[(int)Base58Type.PUBKEY_ADDRESS] = new byte[] { (28) };
+            this.Base58Prefixes[(int)Base58Type.SCRIPT_ADDRESS] = new byte[] { (87) };
+            this.Base58Prefixes[(int)Base58Type.SECRET_KEY] = new byte[] { (28 + 128) };
             this.Base58Prefixes[(int)Base58Type.ENCRYPTED_SECRET_KEY_NO_EC] = new byte[] { 0x01, 0x42 };
             this.Base58Prefixes[(int)Base58Type.ENCRYPTED_SECRET_KEY_EC] = new byte[] { 0x01, 0x43 };
             this.Base58Prefixes[(int)Base58Type.EXT_PUBLIC_KEY] = new byte[] { (0x04), (0x88), (0xB2), (0x1E) };
@@ -145,26 +145,32 @@ namespace Stratis.Bitcoin.Networks
 
             this.Checkpoints = new Dictionary<int, CheckpointInfo>
             {
-                { 0, new CheckpointInfo(new uint256("0x000007c70a931f5cafa42d48eb0f7a627007cada84d84442e7369cc962a0d38f"), new uint256("0x0000000000000000000000000000000000000000000000000000000000000000")) },
-                { 2, new CheckpointInfo(new uint256("0x3fa697d0ba0e948bcd268f2fc316d2c7b41904eeb1bced590053ea0f406cf014"), new uint256("0x0b44e08d070104e6c7a527772aa63acf2b814d61f2db91e184a7d7ec97329388")) },
-                { 50, new CheckpointInfo(new uint256("0x5ba5192b53f4c23238e18835195abddbd1e1b6c7ecb320371a83ee57ba43d8cc"), new uint256("0x54b87a44bebb9925fdc52f0df049279b170c41692713473a6592f1efc89515fb")) },
-                { 100, new CheckpointInfo(new uint256("0x4de52b8d1803c0672cf012e9087e967001b0d1912299abed8dc5c90ba2ff5dba"), new uint256("0x52298a813f241c15bacdbd131f9c18b032775dfa3a8fc1d82f4cc4c894bc7bb8")) },
-                { 500, new CheckpointInfo(new uint256("0xc8f2c0bfcea07a71a9d3b5b968995b03bd507f21f2a1697790f0ab421387a500"), new uint256("0x0c1d113888b4d93d76510e911d0db70cfe9a4bea8c4a76e8124c90392688d2db")) },
-                { 1000, new CheckpointInfo(new uint256("0x93a5c8c3f0f1cfb75122cf02b4413f642b5870ede34689c9e3adf2aa8cb05918"), new uint256("0x5e255d7a0946f20c3a15e59ab1bbeee6b06e50f495723adf9afb191512aa6ad9")) },
-                { 4000, new CheckpointInfo(new uint256("0x476fac3dc504ad4c154adce532bdfce9b136dc37c29f04141cc16d3290579223"), new uint256("0x23d8c533391908f0bc129576e45dad69d4567f881b7c16e10dc930fd2e7bd73e")) },
-                { 6000, new CheckpointInfo(new uint256("0x3750a9ad41a606254923b2f7ad0f22e82864623e65160a7160f270a4c991201c"), new uint256("0x922dad07d28798fd0c3f7af3a1d82aaf4b5fb55a8061bb3e78ded99bfd27fe6b")) },
-                { 6002, new CheckpointInfo(new uint256("0x9f4aae7b2c472741dd72a964c6ff680aaafcf2198e651eae665a756f280532b7"), new uint256("0x1af1a0edcf90f8c60d558ebe7735d3fdc1f2641d00052bf5cc60971c265e239e")) },
-                { 10000, new CheckpointInfo(new uint256("0x7bf91167a8fbcbd25f28025769f106ad6bc49d0407c971d0841e58528b65aa92"), new uint256("0x358b62222fb9c847f1c98db73c7bed2e5dc948249e29ca8e5af9b9c07fbd30bc")) },
-                { 15000, new CheckpointInfo(new uint256("0x43288ba814b30026d2acdc67064c4ae5f0e54a3463961aae84dd25025bbbb780"), new uint256("0x6f0b7dd91ff9cad3cafbcfb6544e7ab6614816c1dad34063fa00abc849767f7d")) },
-                { 25000, new CheckpointInfo(new uint256("0xb1834c79a933c62c4e0720bc8bdbbac69b7e87abc66c886a6ef99761e1223fd0"), new uint256("0xb29f03876532db48c54671314a4b8fcdd61601bad954f7881e478f6afe78789f")) },
-                { 50000, new CheckpointInfo(new uint256("0x6984a19d0439eca15727e9af64389d99ea51275123c5653563d7247fa8ad48db"), new uint256("0xc11209e4839dea73ba741d138ed41f10dc24aaf4444a5564c24d6c7603809478")) },
-                { 75000, new CheckpointInfo(new uint256("0xc4ca3757d914c4a321c80b098bc59d64204872f90f78c78fa44adc72ee38f837"), new uint256("0x7972152c084c941e3ebe9bd8e14cd16cf990031b567140a20d04901e42524c55")) },
-                { 100000, new CheckpointInfo(new uint256("0x237a4e2c62efa76be9a4983a90841b1b474e003e0911fbdd563e228510f02149"), new uint256("0x0f5e0de1003137b44865d438539787131a9c7df22776508fcea71d1ec1cb7626")) },
-                { 125000, new CheckpointInfo(new uint256("0x0669972d495336c85f7bf0ba74f329c8b7c13bad315245b4d9a1549391039628"), new uint256("0x066d6660360941c5b91e0284bee96a43b655095edd52e228974bb39d254d20e2")) },
-                { 150000, new CheckpointInfo(new uint256("0xc1408a25304f05a038a361ae345640cca0c581bebb422941dfb3f94c47442d28"), new uint256("0x3be68cfba7dc70676774050b9314bb4ec8f609b430fb5bce3dae3c929b5f17ea")) },
-                { 200000, new CheckpointInfo(new uint256("0x99884e0373156f847f089b5b23ff8d0ff912a6a9fe65357db7a14de57113d663"), new uint256("0x9abb8a94ad5f8fe2464309d4a384bc4750506fc746b264efacdd5a1a4b40ba4a")) },
-                { 250000, new CheckpointInfo(new uint256("0x1827656f4838dedc29d0e5c95334e881981d9155770f2a52c3913ee71d7c410b"), new uint256("0xae45101b915ae34db06dd6aa28e931682a0cc1f4a971b1766719c7890c6f8ab0")) },
-                { 300000, new CheckpointInfo(new uint256("0xc31bf78b55f17c1755cb474bd820eb1db8aa564a0d794ac47b415a8f25237a26"), new uint256("0x18033e85441654c1f00729c0986bcd647e28c4728b560c357d06578d219e2e83")) }
+                { 0, new CheckpointInfo(new uint256("0x00000036090a68c523471da7a4f0f958c1b4403fef74a003be7f71877699cab7"), new uint256("0x0000000000000000000000000000000000000000000000000000000000000000")) },
+                { 2, new CheckpointInfo(new uint256("0x892f74fe6b462ec612dc745f19b7f299ffb94aabb17a0826a03092c0eb6f83ec"), new uint256("0x8e61edcdfee2e948c7b6885b91a853cb82ba22ae5a5ef97776f2fb381f99cb09")) },
+                { 10, new CheckpointInfo(new uint256("0xd7c9e4381c4b9331be82d13e0b40b932ac624f3fa8b4e80fb8e9f22769095c0a"), new uint256("0x221232ad2caa1635d2b1302b6eafc0254255a7bf5a2d3ea25ac6ac91f6e1c256")) },
+                { 50, new CheckpointInfo(new uint256("0x71b54f5cb27d2b0b1dd34ba89c7ff4fa8e8b37da727373cf98134069fb84803e"), new uint256("0x8aaf92c1d948ba107711997b9d56c08ace5e6d3ab11dfbf2ffffc19798eff454")) },
+                { 100, new CheckpointInfo(new uint256("0xf1fbdb26299ca5bac77963cc2ffd9e1830c3f106b87b235b5c731b4b3259d383"), new uint256("0xfeef70b0e16e80bb2f977ebc3f9aa72e4a5c052d2825e9fe6ee8a593555760ea")) },
+                { 500, new CheckpointInfo(new uint256("0x72bc96ba513fb55431f335de897bb8ce80d898e17a3d4d5e05c48d1670d5f234"), new uint256("0x5e39f38d0a7f68b0aa59c0a5317d6b9ac1c208f01fe56df079f1d0d9d3da3b09")) },
+                { 1000, new CheckpointInfo(new uint256("0xf8f562cd694b5ca517aca2e1cd5b953c22a185e715209bfc2a6ae8eb0a524289"), new uint256("0xa1f55377eef150d1c6863d77c618cf397080ddcdfaa0da2038f1682019c83631")) },
+                { 5000, new CheckpointInfo(new uint256("0x9fbc9dc45a507a287d043b43a55e0623aca4368ca5c655bc1a7a97eef4951d1a"), new uint256("0x77412fe812a6f4d59b8cce8f4bd2ac7e8bfb5dc56b542348e66f9a4bc7c00441")) },
+                { 10000, new CheckpointInfo(new uint256("0x45e01c13af7625b7289ed12f687864d485f603c2b5dcccfff26789bcbbc20439"), new uint256("0x2ccca90aa37406865a6feb5ec198f01d045a64a2aca5ff56ac96c88fe37d2514")) },
+                { 14000, new CheckpointInfo(new uint256("0xecd5ae5e58ddde01087a4c7f2033252acc7237a7aa958f4cd0eb016b3c11cd0e"), new uint256("0xd608bfd6f8b4be11f1a0acd50f0cd269b35d40b9b298c564b0a79b9771025c19")) },
+                { 18000, new CheckpointInfo(new uint256("0x42ee388a72f85e8a63ed81bdaa4d87040a009cff8471f15e5711ab824faedaa7"), new uint256("0x912d1fcd0f1aa5217893cdda2c536cdbed6039af4cb3dc10a9e9f9f8e7522e6e")) },
+                { 20000, new CheckpointInfo(new uint256("0xead9d788c5e0a275d9a8434487248d5b5ed1db14de8ea1627dd70ad1e5fb5f5b"), new uint256("0xcaa8a9f4374e56ef86743040f089e022c50a9cb6cdeb432d66bc077aaf9e8078")) },
+                { 25000, new CheckpointInfo(new uint256("0x9e889f90ee0a249a84c2c090117be70de8d53466a5f0bb312fde435ad50080f0"), new uint256("0xd49c521e4c46fb798dd366afbec6c90020d295228e32f0582f9fd5ce2674f3a0")) },
+                { 30000, new CheckpointInfo(new uint256("0xcd878a41441aca4e2903941c374d0caf17d7080fd1c5e37aca9caab63e82f333"), new uint256("0xa58e327073c17ed360cfe6747ac2fe9ec6bff3f5be00415b3d2897ccf39d5189")) },
+                { 35500, new CheckpointInfo(new uint256("0x3196c8456be83bc810ef0f6e2b34a0962435e89d0844b9db8070487d5ec91afa"), new uint256("0x309d454e9906e40c9472762633188af3957d586be33994a7586c23accb99bd40")) },
+                { 40000, new CheckpointInfo(new uint256("0x4d7b1d7115714d16dce3266087309e898e02a7dc1eb8d3f450c8473836de5a19"), new uint256("0x14eb31bf1e59918b45f74afe0d179475a3a83dfc11e33c974520e5567c8ffb8e")) },
+                { 45000, new CheckpointInfo(new uint256("0x5f110ad2e1fbbb98bcd4d85167c7904631304bbd311144118f631d59795c0f00"), new uint256("0xf4171d8e19d71d032915363acef2a52f29c0833fe6d685fd0cf7d98efa2942bb")) },
+                { 47000, new CheckpointInfo(new uint256("0x0b834c3a8d77939f5fc2e372bc03925a1170e8d386671a8d0f21fa8e5a9d440e"), new uint256("0x5d96f845bf42cc466e5857952fd5e00e27a51c21cdb8b4399f71da1ae4bbba2b")) },
+                { 60000, new CheckpointInfo(new uint256("0xe904061cd883995fa96fa162927f771a3e0a834866cf741da1bf6f64d9807aab"), new uint256("0xd6778815c7b9989ea2ddba8d69e7b7c94a7cd48320b1295e5c23784b31b184d9")) },
+                { 80000, new CheckpointInfo(new uint256("0x4991919485bc0c4f1f3b89dde06f90cca64b6eee2887a8f2105ed1f7219b056e"), new uint256("0x5f667b4d09a5e0e6fb6f41a7f220f4b769bc225c3feb6f826f84c1a2aedc144a")) },
+                { 100000, new CheckpointInfo(new uint256("0x5be1f76165c7133562cdcb3beeac6413aea18e538883e379d5929c6eb26999d1"), new uint256("0x2e0dc1a4fce268f5a85b41a4a9e37032a26b77a6a22d7eae2df5dd4b1e004353")) },
+                { 125000, new CheckpointInfo(new uint256("0xd2f245d326e4e0f1e9e22f548496ca9e47025721d7fece27e071a9f63628f0b8"), new uint256("0x6884864f6017c768868774e600907c104efd3b1e2c529411f7d88a1c11a0478e")) },
+                { 150000, new CheckpointInfo(new uint256("0x4b4325e2c02654284de2719033c0defba485bd08a6259ca67372600447bf084e"), new uint256("0x358255ae11f9e061268ee9a4947ab275b4c0c12cc4d38b1a581801e1e85da1cb")) },
+                { 200000, new CheckpointInfo(new uint256("0x4e4e40dc5cc007135f5113e1ebb22b06c39cff15637b5f51d93340a9cad0dfdf"), new uint256("0xc12688b1c2f4f95762ddac23d078b5a3b4fa02b5c351ad1f544839ff4ef5c061")) },
+                { 250000, new CheckpointInfo(new uint256("0x20c97546de02e60c2d53a9c95e65956a3d89e81eb5f7075882fac2d6cc24d316"), new uint256("0x4e2533fd3cf6c03c1eeeea174df123d9a60d50b15e39ee39ea9450514c473731")) },
+                { 300000, new CheckpointInfo(new uint256("0x1dca0bf2f051429e911fa9b232fcdf69bbaed667fa55451a3ff4d6450ae5dc52"), new uint256("0xf424bdc3c5ce706a531986bf5ace04ad29d8f141396e36f71ff873a3ec26bb09")) }
 
             };
 
@@ -178,18 +184,18 @@ namespace Stratis.Bitcoin.Networks
 
             this.DNSSeeds = new List<DNSSeedData>
             {
-                new DNSSeedData("seed1.fluidchains.net", "seed1.fluidchains.net"),
-                new DNSSeedData("seed2.fluidchains.cloud", "seed2.fluidchains.cloud"),
-                new DNSSeedData("seed3.fluidchains.net", "seed3.fluidchains.net"),
-                new DNSSeedData("seed4.fluidchains.cloud", "seed4.fluidchains.cloud")
+                 new DNSSeedData("seednode1.oexo.cloud", "seednode1.oexo.cloud"),
+                new DNSSeedData("seednode2.oexo.net", "seednode2.oexo.net"),
+                new DNSSeedData("seednode3.oexo.cloud", "seednode3.oexo.cloud"),
+                new DNSSeedData("seednode4.oexo.net", "seednode4.oexo.net")
             };
 
             this.SeedNodes = new List<NetworkAddress>
             {
-                
+
             };
 
-            var hostnames = new[] { "vps201.rutan.cloud", "vps202.rutan.network", "vps101.rutan.cloud", "vps102.rutan.network" };
+            var hostnames = new[] { "vps101.oexo.cloud", "vps102.oexo.net", "vps201.oexo.cloud", "vps202.oexo.net" };
             foreach (string host in hostnames)
             {
                 var addressList = Dns.GetHostAddresses(host).GetValue(0).ToString();
@@ -198,14 +204,14 @@ namespace Stratis.Bitcoin.Networks
                     Endpoint = Utils.ParseIpEndpoint(addressList, this.DefaultPort)
                 };
                 this.SeedNodes.Add(addr);
-            }           
+            }
 
             this.StandardScriptsRegistry = new StratisStandardScriptsRegistry();
 
             // 64 below should be changed to TargetSpacingSeconds when we move that field.
             Assert(this.DefaultBanTimeSeconds <= this.Consensus.MaxReorgLength * 64 / 2);
-            Assert(this.Consensus.HashGenesisBlock == uint256.Parse("0x000007c70a931f5cafa42d48eb0f7a627007cada84d84442e7369cc962a0d38f"));
-            Assert(this.Genesis.Header.HashMerkleRoot == uint256.Parse("0x50b30f93db7ee932ee4a01a9673cc0cb114cd8239c5806e8ea47b3c497057c9f"));
+            Assert(this.Consensus.HashGenesisBlock == uint256.Parse("0x00000036090a68c523471da7a4f0f958c1b4403fef74a003be7f71877699cab7"));
+            Assert(this.Genesis.Header.HashMerkleRoot == uint256.Parse("0x85c4a8a116eb457ff74bb64908e71c6780bff7e69ad3dadc9df6cd753c21f937"));
 
             this.RegisterRules(this.Consensus);
         }
@@ -260,7 +266,7 @@ namespace Stratis.Bitcoin.Networks
 
         protected static Block CreateStratisGenesisBlock(ConsensusFactory consensusFactory, uint nTime, uint nNonce, uint nBits, int nVersion, Money genesisReward)
         {
-            string pszTimestamp = "https://www.olympic.org/news/today-at-pyeongchang-2018-sunday-25-february";
+            string pszTimestamp = "http://www.bbc.com/news/world-middle-east-43691291";
 
             Transaction txNew = consensusFactory.CreateTransaction();
             txNew.Version = 1;

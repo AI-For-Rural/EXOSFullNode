@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Stratis.Bitcoin.Networks
 {
-    public class FluidTest : FluidMain
+    class EXOSRegTest : EXOSTest
     {
     }
 }

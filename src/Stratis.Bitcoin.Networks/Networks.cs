@@ -20,11 +20,11 @@ namespace Stratis.Bitcoin.Networks
             }
         }
 
-        public static NetworksSelector Fluid
+        public static NetworksSelector EXOS
         {
             get
             {
-                return new NetworksSelector(() => new FluidMain(), () => new FluidTest(), () => new FluidRegTest());
+                return new NetworksSelector(() => new EXOSMain(), () => new EXOSTest(), () => new EXOSRegTest());
             }
         }
     }

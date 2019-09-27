@@ -15,7 +15,7 @@ using Stratis.Bitcoin.Features.MemoryPool;
 using Stratis.Bitcoin.Features.Miner;
 using Stratis.Bitcoin.Features.RPC;
 
-namespace Stratis.FluidD
+namespace Stratis.EXOSD
 {
     public class Program
     {
@@ -23,7 +23,7 @@ namespace Stratis.FluidD
         {
             try
             {
-                var nodeSettings = new NodeSettings(networksSelector: Networks.Fluid, protocolVersion: ProtocolVersion.PROVEN_HEADER_VERSION, args: args)
+                var nodeSettings = new NodeSettings(networksSelector: Networks.EXOS, protocolVersion: ProtocolVersion.PROVEN_HEADER_VERSION, args: args)
                 {
                     MinProtocolVersion = ProtocolVersion.ALT_PROTOCOL_VERSION
                 };
