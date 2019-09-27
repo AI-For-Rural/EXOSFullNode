@@ -1,3 +1,19 @@
+# Fluid Docker Images
+Here is a basic Docker image for testing Stratis.FluidD. The images build from the full node master on GitHub. After installing Docker, you can build and run the container with the following. 
+
+## Build container
+
+```
+cd Stratis.FluidD
+docker build .
+```
+ 
+## Run container
+
+```
+docker run -it <containerId>
+```
+
 # Stratis Docker Images
 
 Here we have some basic Docker images for testing Stratis.BitcoinD and Stratis.StratisD. The images build from the full node master on GitHub. After installing Docker, you can build and run the container with the following. 
@@ -63,4 +79,3 @@ CMD ["dotnet", "run"]
 ``` 
 
 Also remove `testnet=1` from the `*.docker.conf` file.
-

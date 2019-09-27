@@ -1,7 +1,7 @@
 EXOSFullNode
 ===============
 
-https://civxeconomy.com/
+https://exoeconomy.com/
 
 Bitcoin Implementation in C#
 ----------------------------
@@ -53,10 +53,11 @@ Sidechains, Private/Permissioned blockchain, Compiled Smart Contracts, NTumbleBi
 Running a FullNode
 ------------------
 
-Our full node is currently in alpha.  
+The master branch is actively developed and regularly committed to, and it can become unstable.  
+To compile a stable (production) release use any of the release tags form version 3.0.x.x and upwards.  
 
 ```
-git clone https://github.com/exofoundation/CivXFullNode.git
+git clone https://github.com/exofoundation/EXOSFullNode.git
 cd StratisBitcoinFullNode\src
 
 dotnet build
@@ -64,7 +65,7 @@ dotnet build
 ```
 
 To run on the Bitcoin network: ``` Stratis.BitcoinD\dotnet run ```  
-To run on the CivX network: ``` Stratis.StratisD\dotnet run ```  
+To run on the EXOS network: ``` Stratis.EXOSD\dotnet run ```  
 
 Getting Started Guide
 -----------

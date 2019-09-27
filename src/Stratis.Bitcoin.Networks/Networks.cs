@@ -19,5 +19,13 @@ namespace Stratis.Bitcoin.Networks
                 return new NetworksSelector(() => new StratisMain(), () => new StratisTest(), () => new StratisRegTest());
             }
         }
+
+        public static NetworksSelector Fluid
+        {
+            get
+            {
+                return new NetworksSelector(() => new FluidMain(), () => new FluidTest(), () => new FluidRegTest());
+            }
+        }
     }
 }
