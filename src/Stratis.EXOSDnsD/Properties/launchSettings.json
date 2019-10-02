@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Stratis.EXOSDnsD": {
+      "commandName": "Project"
+    },
+    "Stratis.EXOSDnsD Test": {
+      "commandName": "Project",
+      "commandLineArgs": "-testnet -dnslistenport=5399 -dnshostname=dns.exos.to -dnsnameserver=ns1.dns.exos.to -dnsmailbox=admin@exos.to"
+    },
+    "Stratis.EXOSDnsD FullNode Test": {
+      "commandName": "Project",
+      "commandLineArgs": "-testnet -dnsfullnode -dnslistenport=5399 -dnshostname=dns.exos.to -dnsnameserver=ns1.dns.exos.to -dnsmailbox=admin@exos.to"
+    }
+  }
+}
