@@ -26,10 +26,10 @@ namespace Stratis.Bitcoin.Networks
             this.Name = "EXOSTest";
             this.NetworkType = NetworkType.Testnet;
             this.Magic = magic;
-            this.DefaultPort = 14562;
+            this.DefaultPort = 24562;
             this.DefaultMaxOutboundConnections = 16;
             this.DefaultMaxInboundConnections = 109;
-            this.DefaultRPCPort = 14561;
+            this.DefaultRPCPort = 24561;
             this.DefaultAPIPort = 39121;
             this.DefaultSignalRPort = 38621;
             this.CoinTicker = "TEXOS";
@@ -48,7 +48,7 @@ namespace Stratis.Bitcoin.Networks
 
             Block genesisBlock = CreateStratisGenesisBlock(consensusFactory, this.GenesisTime, this.GenesisNonce, this.GenesisBits, this.GenesisVersion, this.GenesisReward);
 
-            genesisBlock.Header.Time = 1528761600;
+            genesisBlock.Header.Time = 1570734610;
             genesisBlock.Header.Nonce = 440504;
             genesisBlock.Header.Bits = powLimit;
 
@@ -106,7 +106,7 @@ namespace Stratis.Bitcoin.Networks
                 powLimit: powLimit,
                 minimumChainWork: null,
                 isProofOfStake: true,
-                lastPowBlock: 45005,
+                lastPowBlock: 45000,
                 proofOfStakeLimit: new BigInteger(uint256.Parse("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").ToBytes(false)),
                 proofOfStakeLimitV2: new BigInteger(uint256.Parse("000000000000ffffffffffffffffffffffffffffffffffffffffffffffffffff").ToBytes(false)),
                 proofOfStakeReward: Money.COIN
@@ -120,33 +120,19 @@ namespace Stratis.Bitcoin.Networks
 
             this.Checkpoints = new Dictionary<int, CheckpointInfo>
             {
-                { 0, new CheckpointInfo(new uint256("0x0000059bb2c2048493efcb0f1a034972b3ce4089d54c93b69aaab212fb369887"), new uint256("0x0000000000000000000000000000000000000000000000000000000000000000")) },
-                { 2, new CheckpointInfo(new uint256("0xf1317999b79c983da36aeca960d4bda3957558db3e99c2474965049ef8ce2050"), new uint256("0x0e7256c115bbee91374f77b8033caff2df57736321df3ee28f24e7d8ddd69590")) },
-                { 10, new CheckpointInfo(new uint256("0xa97253fddf3aee8cb585b7599638e1a45f86bfcf3244528ad84a6144d12be1bc"), new uint256("0x4f5bbbcbf2da4abf247bb6d807fab8a0e47d9461450da6f2d1395c9a2e3841d1")) },
-                { 50, new CheckpointInfo(new uint256("0x31f10f8829be7c6ba6935c4ec78409462788822677bd2a9f1e5dcaf0a8dc53e4"), new uint256("0x05220e0ae37c38911790316d2b71593019fe95502b0d03636db77ccb219026b5")) },
-                { 500, new CheckpointInfo(new uint256("0xd732052f1a209cfe5c28897f4e3e07585292baf7accfab03734eb9c969a741fa"), new uint256("0x762358a331eb58e23930c409a7c15122504912d9de46c1a818918b7b117ec98b")) },
-                { 1000, new CheckpointInfo(new uint256("0x64fe6c261f1387587710486203480be57cd342bd5966a46d8ee4ace52158323f"), new uint256("0xea320c1fe57db0ebd7cc3ec3aba0b00931473765c4507b41e03cd39e6715446e")) },
-                { 5000, new CheckpointInfo(new uint256("0xa1de4325a7d8cad4d2e7f61fb8fde91807f483d25a421a074e666c1af24cd370"), new uint256("0xbeab25cf4802f67f4777f23f269b93c5e99ecc754ca48f38b2c4c59b2185e141")) },
-                { 10000, new CheckpointInfo(new uint256("0xbf2588c4eaec9fd2b27ba577ff8004892570914e3dc7121a08936cb68aad196a"), new uint256("0x9660bb96adc9c81e0db373965677661c2a6d38a9d6b925be7eea69c947712e33")) },
-                { 25000, new CheckpointInfo(new uint256("0xffee3f64cb9adb1bb719a3d202945ba218be7548793ff4346b2c8e1a7bc989b3"), new uint256("0xc82bf5587395301fdef2cbcf9c03f4a634006aac07b0d55d394590ef0fbb0cdb")) },
-                { 45000, new CheckpointInfo(new uint256("0x0b230068a9e83f9e405d31d6681190c0466c390f56536bb61772682ef851aade"), new uint256("0x5104ba9e879e71c5e643c9e5098ead862a303aa4ab9ee1bd25ed0e067b543d31")) },
-                { 99000, new CheckpointInfo(new uint256("0x1608eb6833d886b462ccd2cc2971c0f76bb86739d038c92d075f73ee4bd8fae0"), new uint256("0xa22b1fe5f66716fd122254a2546a97f8a0588a7160b68cae1c1bf5f0d5a48632")) }
-
+               
             };
 
             this.DNSSeeds = new List<DNSSeedData>
             {
-                new DNSSeedData("testseednode1.oexo.cloud", "testseednode1.oexo.cloud"),
-                new DNSSeedData("testseednode2.oexo.net", "testseednode2.oexo.net"),
-                new DNSSeedData("testseednode3.oexo.cloud", "testseednode3.oexo.cloud"),
-                new DNSSeedData("testseednode4.oexo.net", "testseednode4.oexo.net")
+               
             };
 
             this.SeedNodes = new List<NetworkAddress>
             {
 
             };
-            var hostnames = new[] { "vps151.oexo.cloud", "vps152.oexo.net", "vps251.oexo.cloud", "vps252.oexo.net" };
+            var hostnames = new[] {""};
             foreach (string host in hostnames)
             {
                 var addressList = Dns.GetHostAddresses(host).GetValue(0).ToString();
@@ -161,7 +147,8 @@ namespace Stratis.Bitcoin.Networks
 
             // 64 below should be changed to TargetSpacingSeconds when we move that field.
             Assert(this.DefaultBanTimeSeconds <= this.Consensus.MaxReorgLength * 64 / 2);
-            Assert(this.Consensus.HashGenesisBlock == uint256.Parse("0x0000059bb2c2048493efcb0f1a034972b3ce4089d54c93b69aaab212fb369887"));
+            Assert(this.Consensus.HashGenesisBlock == uint256.Parse("0x732186a35ec1acdc31d48d920d9e8ee30d934161381fd23170fea4272e826fc6"));
+            
 
             this.RegisterRules(this.Consensus);
         }
