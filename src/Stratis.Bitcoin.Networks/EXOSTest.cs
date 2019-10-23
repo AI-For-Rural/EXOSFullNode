@@ -40,17 +40,17 @@ namespace Stratis.Bitcoin.Networks
             var consensusFactory = new PosConsensusFactory();
 
             // Create the genesis block.
-            this.GenesisTime = 1523205120;
-            this.GenesisNonce = 842767;
-            this.GenesisBits = 0x1e0fffff;
+            this.GenesisTime = 1571832000;
+            this.GenesisNonce = 108203;
+            this.GenesisBits = powLimit;
             this.GenesisVersion = 1;
             this.GenesisReward = Money.Zero;
 
             Block genesisBlock = CreateStratisGenesisBlock(consensusFactory, this.GenesisTime, this.GenesisNonce, this.GenesisBits, this.GenesisVersion, this.GenesisReward);
 
-            genesisBlock.Header.Time = 1570734610;
-            genesisBlock.Header.Nonce = 440504;
-            genesisBlock.Header.Bits = powLimit;
+         //  genesisBlock.Header.Time = 1571832000;
+         //  genesisBlock.Header.Nonce = 0;
+         //  genesisBlock.Header.Bits = powLimit;
 
             this.Genesis = genesisBlock;
 
@@ -147,8 +147,7 @@ namespace Stratis.Bitcoin.Networks
 
             // 64 below should be changed to TargetSpacingSeconds when we move that field.
             Assert(this.DefaultBanTimeSeconds <= this.Consensus.MaxReorgLength * 64 / 2);
-            Assert(this.Consensus.HashGenesisBlock == uint256.Parse("0x732186a35ec1acdc31d48d920d9e8ee30d934161381fd23170fea4272e826fc6"));
-            
+            Assert(this.Consensus.HashGenesisBlock == uint256.Parse("0x0000545606bc55d87053776cee5a8e73aa2bef543f181e9d6d493275951e2509"));
 
             this.RegisterRules(this.Consensus);
         }
