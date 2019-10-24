@@ -88,11 +88,11 @@ namespace Stratis.Bitcoin.Networks
                 majorityWindow: 1000,
                 buriedDeployments: buriedDeployments,
                 bip9Deployments: bip9Deployments,
-                bip34Hash: new uint256("0x0000059bb2c2048493efcb0f1a034972b3ce4089d54c93b69aaab212fb369887"),
+                bip34Hash: new uint256("0x0000a24a922acc0b13a208297a18b3fcdab6492d1da54317e201270d250b2bf1"),
                 ruleChangeActivationThreshold: 1916, // 95% of 2016
                 minerConfirmationWindow: 2016, // nPowTargetTimespan / nPowTargetSpacing
                 maxReorgLength: 500,
-                defaultAssumeValid: new uint256("0xffed8f737ce62b33e5bdd675d0243686bc67f8d7041dd3d7e49ddc3062dec785"), // 78000
+                defaultAssumeValid: new uint256("0x92c528a1e3cadf32f5e3e00e351f49ad70368deb92825b96619438c4aead7b5a"), // 800
                 maxMoney: long.MaxValue,
                 coinbaseMaturity: 10,
                 premineHeight: 2,
@@ -120,7 +120,12 @@ namespace Stratis.Bitcoin.Networks
 
             this.Checkpoints = new Dictionary<int, CheckpointInfo>
             {
-               
+                { 0, new CheckpointInfo(new uint256("0x0000a24a922acc0b13a208297a18b3fcdab6492d1da54317e201270d250b2bf1")) },
+                { 2, new CheckpointInfo(new uint256("0xa3c8ffdd06ea336e89462b40a480fbb415dbaf1b8a30dce27c701f98eb6e9fb8")) },
+                { 10, new CheckpointInfo(new uint256("0x00581645bd761f7ead5fd6bed0c88ac61be8a1af55a124155594792c48254dc9")) },
+                { 50, new CheckpointInfo(new uint256("0x505c959472bd21398c62369a2fe4ba2eeaa6cde53a0918acfe1f9b6877c4524e")) },
+                { 500, new CheckpointInfo(new uint256("0x65808fad20db4a463637da3e735ce447159453aafb07c36716f8ee9e1a39ba9c")) },
+
             };
 
             this.DNSSeeds = new List<DNSSeedData>
