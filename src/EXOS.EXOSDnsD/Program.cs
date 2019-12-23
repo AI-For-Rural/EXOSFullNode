@@ -15,15 +15,23 @@ using Stratis.Bitcoin.Features.Wallet;
 using Stratis.Bitcoin.Networks;
 using Stratis.Bitcoin.Utilities;
 
-namespace Stratis.EXOSDnsD
+namespace Stratis.StratisDnsD
 {
-    class Program
+    /// <summary>
+    /// Main entry point.
+    /// </summary>
+    public class Program
     {
+        /// <summary>
+        /// The async entry point for the Stratis Dns process.
+        /// </summary>
+        /// <param name="args">Command line arguments.</param>
+        /// <returns>A task used to await the operation.</returns>
         public static async Task Main(string[] args)
         {
             try
             {
-                var nodeSettings = new NodeSettings(networksSelector: Networks.EXOS , protocolVersion: ProtocolVersion.PROVEN_HEADER_VERSION, args: args)
+                var nodeSettings = new NodeSettings(networksSelector: Networks.EXOS, protocolVersion: ProtocolVersion.PROVEN_HEADER_VERSION, args: args)
                 {
                     MinProtocolVersion = ProtocolVersion.ALT_PROTOCOL_VERSION
                 };
