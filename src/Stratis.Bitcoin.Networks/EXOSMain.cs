@@ -97,7 +97,7 @@ namespace Stratis.Bitcoin.Networks
             this.Consensus = new NBitcoin.Consensus(
                 consensusFactory: consensusFactory,
                 consensusOptions: consensusOptions,
-                coinType: 105,
+                coinType: 248,
                 hashGenesisBlock: genesisBlock.GetHash(),
                 subsidyHalvingInterval: 210000,
                 majorityEnforceBlockUpgrade: 750,
@@ -170,7 +170,12 @@ namespace Stratis.Bitcoin.Networks
                 { 150000, new CheckpointInfo(new uint256("0x4b4325e2c02654284de2719033c0defba485bd08a6259ca67372600447bf084e"), new uint256("0x358255ae11f9e061268ee9a4947ab275b4c0c12cc4d38b1a581801e1e85da1cb")) },
                 { 200000, new CheckpointInfo(new uint256("0x4e4e40dc5cc007135f5113e1ebb22b06c39cff15637b5f51d93340a9cad0dfdf"), new uint256("0xc12688b1c2f4f95762ddac23d078b5a3b4fa02b5c351ad1f544839ff4ef5c061")) },
                 { 250000, new CheckpointInfo(new uint256("0x20c97546de02e60c2d53a9c95e65956a3d89e81eb5f7075882fac2d6cc24d316"), new uint256("0x4e2533fd3cf6c03c1eeeea174df123d9a60d50b15e39ee39ea9450514c473731")) },
-                { 300000, new CheckpointInfo(new uint256("0x1dca0bf2f051429e911fa9b232fcdf69bbaed667fa55451a3ff4d6450ae5dc52"), new uint256("0xf424bdc3c5ce706a531986bf5ace04ad29d8f141396e36f71ff873a3ec26bb09")) }
+                { 300000, new CheckpointInfo(new uint256("0x1dca0bf2f051429e911fa9b232fcdf69bbaed667fa55451a3ff4d6450ae5dc52"), new uint256("0xf424bdc3c5ce706a531986bf5ace04ad29d8f141396e36f71ff873a3ec26bb09")) },
+                { 350000, new CheckpointInfo(new uint256("0x8ab2fa51dc9c83200f3b2c662648f479f656635ce5c847209f74c2636d45e5c8"), new uint256("0x322303ee24efdb0a07524b95ad9949c278fd4a7aa2cd259f7ac611333b4bc792")) },
+                { 400000, new CheckpointInfo(new uint256("0x78da79e80c94c2a175276eb4b903a15395d4213e8814d1f1fabc225e05c56e69"), new uint256("0xc7179fa14c296ebc661f2f1db32d4492cc176d86fe64ad14fb2058ac0f132294")) },
+                { 450000, new CheckpointInfo(new uint256("0xfaa749cba84d1111affe61cb8c14ba43a452a265a136066554a22cfa14cabfcd"), new uint256("0x651884ceb30069212c90b5fb3a11d2e6263c0a5c76d6b9b92274ffd6cb3b8fea")) },
+                { 600000, new CheckpointInfo(new uint256("0xa4bf14b94da99b72abafb66624e0f238bef68f9141f79f811f618d67bd8149d1"), new uint256("0x99199a7ac240838d58e362e834e43fc52b74e146f84ce3d879d4c213a4799745")) },
+                { 790000, new CheckpointInfo(new uint256("0x11610eefff99c06e8fe4667adb07f8598c339ed04e6eed5414b115fb7d4cfd49"), new uint256("0x46cb091b43846e21b547ebf3787deab210628919421180d4cc8275d276fe1cda")) }
 
             };
 
