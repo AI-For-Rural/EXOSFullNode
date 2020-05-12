@@ -1,0 +1,15 @@
+﻿{
+  "profiles": {
+    "EXOS.EXOSDnsD": {
+      "commandName": "Project"
+    },
+    "EXOS.EXOSDnsD Test": {
+      "commandName": "Project",
+      "commandLineArgs": "-testnet -dnslistenport=5399 -dnshostname=dns.exos.com -dnsnameserver=ns1.dns.exos.com -dnsmailbox=admin@exos.com"
+    },
+    "EXOS.EXOSDnsD FullNode Test": {
+      "commandName": "Project",
+      "commandLineArgs": "-testnet -dnsfullnode -dnslistenport=5399 -dnshostname=dns.exos.com -dnsnameserver=ns1.dns.exos.com -dnsmailbox=admin@exos.com"
+    }
+  }
+}
