@@ -31,7 +31,7 @@ namespace Stratis.Bitcoin.Features.RPC
         private readonly IHttpContextFactory httpContextFactory;
         private readonly DataFolder dataFolder;
 
-        public const string ContentType = "application/json; charset=utf-8";
+        public const string ContentType = "application/json";
 
         public RPCMiddleware(RequestDelegate next, IRPCAuthorization authorization, ILoggerFactory loggerFactory, IHttpContextFactory httpContextFactory, DataFolder dataFolder)
         {

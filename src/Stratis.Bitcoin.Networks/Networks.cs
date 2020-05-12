@@ -19,5 +19,13 @@ namespace Stratis.Bitcoin.Networks
                 return new NetworksSelector(() => new StratisMain(), () => new StratisTest(), () => new StratisRegTest());
             }
         }
+
+        public static NetworksSelector EXOS
+        {
+            get
+            {
+                return new NetworksSelector(() => new EXOSMain(), () => new EXOSTest(), () => new EXOSRegTest());
+            }
+        }
     }
 }

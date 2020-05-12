@@ -19,6 +19,6 @@
         /// <summary>
         /// Stratis
         /// </summary>
-        Stratis = 105
+        Stratis = 248
     }
 }

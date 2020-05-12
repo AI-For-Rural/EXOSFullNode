@@ -12,8 +12,8 @@ namespace Stratis.Bitcoin.Features.Consensus.Rules.CommonRules
     /// </summary>
     public class StratisBugFixPosFutureDriftRule : PosFutureDriftRule
     {
-        /// <summary>Drifting Bug Fix, hardfork on Sat, 19 Nov 2016 00:00:00 GMT.</summary>
-        public const long DriftingBugFixTimestamp = 1479513600;
+        /// <summary>Drifting Bug Fix, hardfork on Wed May 16,2018 00:00:00 GMT.</summary>
+        public const long DriftingBugFixTimestamp = 1526428800;
 
         /// <summary>Old future drift in seconds before the hardfork.</summary>
         private const int BugFutureDriftSeconds = 128 * 60 * 60;

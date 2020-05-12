@@ -29,7 +29,7 @@ namespace NBitcoin
         private byte nDepth;
         private byte[] vchFingerprint = new byte[FingerprintLength];
 
-        private static readonly byte[] hashkey = Encoders.ASCII.DecodeData("Bitcoin seed");
+        private static readonly byte[] hashkey = Encoders.ASCII.DecodeData("CivX seed");
 
         /// <summary>
         /// Gets the depth of this extended key from the root key.
